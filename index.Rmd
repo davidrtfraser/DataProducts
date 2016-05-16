@@ -1,0 +1,66 @@
+---
+title       : Your Probability of Surviving the Titanic
+subtitle    : Coursera Developing Data Products Project
+author      : David R. T. Fraser
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Introduction & Titanic Prediction Idea
+I've been completing tutorials related to the Kaggle machine learning from Disaster Competition
+(see https://www.kaggle.com/c/titanic).  For this course I wanted to build an app. to help people better understand how the deaths caused by the sinking of the Titanic affected different passenger groups in different ways.  To do this I wanted to build an app that would have the user pretend that they were were aboard the ship.  I thought that by prompting them to input their age, sex, what class of ticket they would have purchased, and what their port of departure would have been, then this information could be used to return the probability that they would have survived based on data from the actual passengers.
+
+--- .class #id 
+
+## About the Titanic Dataset & Inputs
+In R, through the "Titanic" package, data related to the survival of the passenger list is available.  However, the data is divided into two sets a training set and a testing set.  The training set consists of 891 observations and also includes a column which indicates whether or not an individual survived.  I used a subset of the training data (i.e., only the survived, age, sex, class, and embarked variables) to fit a regression tree and this tree is what I used in my app. to predict the probability of survival given the information that the individual inputs.
+
+--- .class #id 
+
+## The Fit Regression Tree
+```{r,echo=FALSE}
+library(titanic)
+library(rpart)
+library(rattle)
+library(rpart.plot)
+library(RColorBrewer)
+
+train <- titanic_train
+which(train$Embarked == '')
+train$Embarked[c(62,830)] ="S"
+train$Embarked <- factor(train$Embarked)
+
+train$Title <- sapply(train$Name, FUN=function (x){strsplit(x,split='[,.]')[[1]][2]})
+train$Surname <-sapply(train$Name, FUN=function (x){strsplit(x,split='[,.]')[[1]][1]})
+train$Common <- sapply(train$Name, FUN=function (x){strsplit(x,split=' ')[[1]][3]})
+train$Title <- sub(' ', '', train$Title)
+
+train$Title[train$Title %in% c('Mme', 'Mlle')] <- 'Mlle'
+train$Title[train$Title %in% c('Capt', 'Don', 'Major', 'Sir', 'Jonkheer','Col')] <- 'Sir'
+train$Title[train$Title %in% c('Dona', 'Lady', 'the Countess')] <- 'Lady'
+train$Title[train$Title %in% c('Ms')] <-'Miss'
+train$Title <- factor(train$Title)
+train$Child.Senior <- "Mid"
+train$Child.Senior[train$Age < 18] <- "Child"
+train$Child.Senior[train$Age >= 60] <- "Senior"
+train$Child.Senior<-factor(train$Child.Senior)
+
+Agefit <- rpart(Age ~ Pclass + Sex + SibSp + Parch + Fare + Embarked + Title,
+                data=train[!is.na(train$Age),], method="anova")
+train$Age[is.na(train$Age)] <- predict(Agefit, train[is.na(train$Age),])
+
+fit <- rpart(Survived~Age+Sex+Pclass+Embarked, data=train)
+fancyRpartPlot(fit)
+```
+
+--- .class #id 
+
+## Implementing the Tree
+To implement the tree that I've fit, I created a function that takes the age, sex, class, and embarked variables, and feeds them through a complex if else control structure that returns the appropriate probability.
+
+--- .class #id 

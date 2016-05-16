@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Probability of Surviving the Titanic</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Your Probability of Surviving the Titanic">
+  <meta name="author" content="David R. T. Fraser">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Your Probability of Surviving the Titanic</h1>
+    <h2>Coursera Developing Data Products Project</h2>
+    <p>David R. T. Fraser<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction &amp; Titanic Prediction Idea</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>I&#39;ve been completing tutorials related to the Kaggle machine learning from Disaster Competition
+(see <a href="https://www.kaggle.com/c/titanic">https://www.kaggle.com/c/titanic</a>).  For this course I wanted to build an app. to help people better understand how the deaths caused by the sinking of the Titanic affected different passenger groups in different ways.  To do this I wanted to build an app that would have the user pretend that they were were aboard the ship.  I thought that by prompting them to input their age, sex, what class of ticket they would have purchased, and what their port of departure would have been, then this information could be used to return the probability that they would have survived based on data from the actual passengers.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>About the Titanic Dataset &amp; Inputs</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>In R, through the &quot;Titanic&quot; package, data related to the survival of the passenger list is available.  However, the data is divided into two sets a training set and a testing set.  The training set consists of 891 observations and also includes a column which indicates whether or not an individual survived.  I used a subset of the training data (i.e., only the survived, age, sex, class, and embarked variables) to fit a regression tree and this tree is what I used in my app. to predict the probability of survival given the information that the individual inputs.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The Fit Regression Tree</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>## [1]  62 830
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Implementing the Tree</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>To implement the tree that I&#39;ve fit, I created a function that takes the age, sex, class, and embarked variables, and feeds them through a complex if else control structure that returns the appropriate probability.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction &amp; Titanic Prediction Idea'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='About the Titanic Dataset &amp; Inputs'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='The Fit Regression Tree'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Implementing the Tree'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='NA'>
+         5
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
